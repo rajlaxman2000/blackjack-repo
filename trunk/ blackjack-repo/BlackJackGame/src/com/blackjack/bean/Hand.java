@@ -12,11 +12,14 @@ import java.util.ArrayList;
  * 
  */
 public class Hand {
+	
 	private ArrayList<Card> playerHand = new ArrayList<Card>();
+	
 	/**
 	 * The number of cards in the first hand
 	 */
 	public final static int INITIAL_HAND_SIZE = 2;
+	
 	/**
 	 * The value required for blackjack
 	 */
@@ -25,10 +28,8 @@ public class Hand {
 	/**
 	 * Creates a hand with Card c1 and Card c2
 	 * 
-	 * @param card1
-	 *            The first Card to be added to the Hand
-	 * @param card2
-	 *            The second Card to be added to the Hand
+	 * @param card1 - The first Card to be added to the Hand
+	 * @param card2 - The second Card to be added to the Hand
 	 */
 	public Hand(Card card1, Card card2) {
 		playerHand.add(card1);
@@ -38,8 +39,7 @@ public class Hand {
 	/**
 	 * Adds a card to the hand
 	 * 
-	 * @param toAdd
-	 *            The Card to be added to the Hand
+	 * @param toAdd - The Card to be added to the Hand
 	 */
 	public void addCard(Card toAdd) {
 		playerHand.add(toAdd);
@@ -48,8 +48,7 @@ public class Hand {
 	/**
 	 * Gets the card at index position of the hand
 	 * 
-	 * @param index
-	 *            Position of the card to be retrieved
+	 * @param index - Position of the card to be retrieved
 	 * @return Card at position index
 	 */
 	public Card get(int index) {
@@ -99,8 +98,7 @@ public class Hand {
 	}
 
 	/**
-	 * Hand is Blackjack if and only if it has 2 cards: an Ace and a 10, Jack,
-	 * Queen, or King
+	 * Hand is Blackjack if and only if it has 2 cards: an Ace and a 10, Jack, Queen, King
 	 * 
 	 * @return boolean representing whether the Hand is BlackJack
 	 */

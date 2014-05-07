@@ -65,9 +65,9 @@ public class Deck {
 		deck.remove(0);
 		numCardsRemaining--;
 		int face = toDraw.getFace();
-		if (face >= Card.TWO && face <= Card.SIX)
+		if (face >= 1 && face <= 5)
 			count++;
-		if (face >= Card.TEN || face == Card.ACE)
+		if (face >= 9 || face == Card.ACE)
 			count--;
 
 		return toDraw;
@@ -86,8 +86,7 @@ public class Deck {
 	/**
 	 * Adds a card to the bottom of the deck
 	 * 
-	 * @param c
-	 *            Card to be added the bottom of the deck
+	 * @param c -	Card to be added the bottom of the deck
 	 */
 	public void addToBottom(Card c) {
 		deck.add(c);
