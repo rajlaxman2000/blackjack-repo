@@ -20,9 +20,9 @@ import com.blackjack.bean.Hand;
 /**
  * A container that shows a player's name, remaining cash, and his hand. It also
  * contains fields for its current bet, the minimum bet, and the card image
- * file. The player can be called upon to do bets, insurance, a game action
- * (for computers), receive money/winnings, and clear his hand. This panel is
- * not designed, however, to handle splits.
+ * file. The player can be called upon to do bets, insurance, a game action (for
+ * computers), receive money/winnings, and clear his hand. This panel is not
+ * designed, however, to handle splits.
  * 
  */
 public class PlayerPanel extends JPanel {
@@ -44,28 +44,20 @@ public class PlayerPanel extends JPanel {
 	 * Integer representing a win
 	 */
 	public static final int WIN = 1;
+
 	/**
 	 * Integer representing a push
 	 */
 	public static final int PUSH = 0;
+
 	/**
 	 * Integer representing a loss
 	 */
 	public static final int LOSS = -1;
-	private static Random rnd = new Random();
 
-	/**
-	 * Easy mode for AI
-	 */
-	public static final int EASY = 1;
-	/**
-	 * Hard mode for AI
-	 */
-	public static final int HARD = 2;
+	// private static Random rnd = new Random();
 
-	private int previousBet;
-	private int previousOutcome;
-	private int level;
+	private int previousOutcome = 0;
 
 	/**
 	 * Creates a panel displaying the player's name, his remaining money, and
@@ -75,8 +67,6 @@ public class PlayerPanel extends JPanel {
 	 *            Name of the player
 	 * @param isHumanPlayer
 	 *            is the player a human or a computer
-	 * @param difficulty
-	 *            Difficulty of AI (-1 for human)
 	 * @param startMoney
 	 *            the starting amount of money player has
 	 * @param minimumBet
@@ -84,7 +74,7 @@ public class PlayerPanel extends JPanel {
 	 * @param cardImages
 	 *            the card images file
 	 */
-	public PlayerPanel(String pName, boolean isHumanPlayer, int difficulty, int startMoney, int minimumBet, Image cardImages) {
+	public PlayerPanel(String pName, boolean isHumanPlayer, int startMoney,int minimumBet, Image cardImages) {
 		super();
 		setLayout(new BoxLayout(this, BoxLayout.Y_AXIS));
 		setPreferredSize(new Dimension(99, 325));
@@ -96,7 +86,6 @@ public class PlayerPanel extends JPanel {
 				BorderFactory.createLineBorder(c), name));
 		name = pName;
 		isHuman = isHumanPlayer;
-		level = difficulty;
 		money = startMoney;
 		bet = 0;
 		minBet = minimumBet;
@@ -111,9 +100,6 @@ public class PlayerPanel extends JPanel {
 
 		add(moneyDisp);
 		add(betDisp);
-
-		previousBet = 0;
-		previousOutcome = 0;
 	}
 
 	/**
@@ -132,7 +118,7 @@ public class PlayerPanel extends JPanel {
 	 */
 	public ArrayList<Card> clearHand() {
 		return hand.clearHand();
-	}	
+	}
 
 	/**
 	 * New hand for player with Card c1 and Card c2
@@ -156,17 +142,18 @@ public class PlayerPanel extends JPanel {
 	 * @return amount to bet
 	 */
 	public int askBet(int count) {
-		int betAmount=0;
+		int betAmount = 0;
 		if (isHuman) {
-			betAmount = askHumanBet("Minimum Bet is $" + minBet	+ ". How much will are you betting?", minBet, money);
-		} 
-		
+			betAmount = askHumanBet("Minimum Bet is $" + minBet
+					+ ". How much will are you betting?", minBet, money);
+		}
+
 		money = money - betAmount;
 		bet = betAmount;
 		updateText();
 		return betAmount;
 	}
-	
+
 	/**
 	 * Adds to player's total money amount moneyWon.
 	 * 
@@ -174,11 +161,11 @@ public class PlayerPanel extends JPanel {
 	 *            amount of money to add
 	 */
 	public void addWinnings(int moneyWon) {
-		money += moneyWon;
+		money = money + moneyWon;
 		updateText();
 
 		if (moneyWon > bet) {
-			previousOutcome = WIN;
+			this.previousOutcome = WIN;
 			moneyDisp.setText(moneyDisp.getText() + "  ");
 		} else if (moneyWon == bet) {
 			previousOutcome = PUSH;
@@ -267,7 +254,8 @@ public class PlayerPanel extends JPanel {
 				hBet = Integer.valueOf(sBet);
 			}
 		} catch (Exception e) {
-			JOptionPane.showMessageDialog(this, "Trying to be funny, eh? Don't wanna play? - GET OUT.");
+			JOptionPane.showMessageDialog(this,
+					"Trying to be funny, eh? Don't wanna play? - GET OUT.");
 			System.exit(0);
 		}
 		return hBet;
@@ -302,7 +290,7 @@ public class PlayerPanel extends JPanel {
 			cx = 2 * 79;
 			cy = 4 * 123;
 		} else {
-			cx = (card.getFace()-1) * 79;
+			cx = (card.getFace() - 1) * 79;
 			switch (card.getSuit()) {
 			case Card.DIAMONDS:
 				cy = 123;
