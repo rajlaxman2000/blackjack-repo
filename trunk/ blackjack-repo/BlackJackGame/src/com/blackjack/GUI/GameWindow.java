@@ -25,13 +25,9 @@ public class GameWindow extends JFrame implements ActionListener {
 
 	private static final long serialVersionUID = 1L;
 	
-	public ChoicePanel playerChoices;
-	public PlayerPanel human;
-
 	private DealerPanel dealer;
 	private Deck deck;
 	private boolean turnContinue;
-
 	private Image cardImages;
 	
 	/**
@@ -45,22 +41,28 @@ public class GameWindow extends JFrame implements ActionListener {
 	 */
 	private int initialMoney;
 	
-	private static final String WindowHeading = "Geetha's : Blackjack";
+	private static final String WINDOW_HEADING = "Geetha's : Blackjack";
+	
+	
+	public ChoicePanel playerChoices;
+	public PlayerPanel human;	
 
 	/**
 	 * Opens window containing Blackjack game.
 	 */
 	public GameWindow(int minBet, int initialMoney) {
 		
-		super(WindowHeading);
+		super(WINDOW_HEADING);
 		
 		setMinBet(minBet);
 		setInitialMoney(initialMoney);
-
-		playerChoices = new ChoicePanel();
+		
 		getContentPane().setBackground(new Color(80, 135, 85));
 		loadImages();
+		
+		//Creates player and dealer panels 
 		initComponents();
+		
 		pack();
 		setLocationRelativeTo(null);
 		setDefaultCloseOperation(EXIT_ON_CLOSE);
@@ -75,7 +77,7 @@ public class GameWindow extends JFrame implements ActionListener {
 	 */
 	@Override
 	public void actionPerformed(ActionEvent a) {
-
+		
 		String command = a.getActionCommand();
 		if (command.equals("Hit")) {
 			giveCard(human);
@@ -107,6 +109,8 @@ public class GameWindow extends JFrame implements ActionListener {
 		players.setOpaque(false);
 		
 		add(players, BorderLayout.CENTER);
+		
+		playerChoices = new ChoicePanel();
 		playerChoices.addListener(this);
 		add(playerChoices, BorderLayout.PAGE_END);
 	}
@@ -310,7 +314,7 @@ public class GameWindow extends JFrame implements ActionListener {
 	public void reset() {
 		collectCards(human);
 		collectDealerCards();
-		turnContinue = true;
+		setTurnContinue(true);
 	}
 
 	/**
