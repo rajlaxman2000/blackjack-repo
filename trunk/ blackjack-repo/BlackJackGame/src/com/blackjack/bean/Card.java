@@ -13,56 +13,56 @@ public class Card {
 	/**
 	 * The face value of an Ace
 	 */
-	public static final int ACE = 0;
+	public static final int ACE = 1;
 
 	/**
 	 * The face value of a Two
 	 */
-	public static final int TWO = 1;
+	public static final int TWO = 2;
 	/**
 	 * The face value of a Three
 	 */
-	public static final int THREE = 2;
+	public static final int THREE = 3;
 	/**
 	 * The face value of a Four
 	 */
-	public static final int FOUR = 3;
+	public static final int FOUR = 4;
 	/**
 	 * The face value of a Five
 	 */
-	public static final int FIVE = 4;
+	public static final int FIVE = 5;
 	/**
 	 * The face value of a Six
 	 */
-	public static final int SIX = 5;
+	public static final int SIX = 6;
 	/**
 	 * The face value of a Seven
 	 */
-	public static final int SEVEN = 6;
+	public static final int SEVEN = 7;
 	/**
 	 * The face value of an Eight
 	 */
-	public static final int EIGHT = 7;
+	public static final int EIGHT = 8;
 	/**
 	 * The face value of a Nine
 	 */
-	public static final int NINE = 8;
+	public static final int NINE = 9;
 	/**
 	 * The face value of a Ten
 	 */
-	public static final int TEN = 9;
+	public static final int TEN = 10;
 	/**
 	 * The face value of a Jack
 	 */
-	public static final int JACK = 10;
+	public static final int JACK = 11;
 	/**
 	 * The face value of a Queen
 	 */
-	public static final int QUEEN = 11;
+	public static final int QUEEN = 12;
 	/**
 	 * The face value of a King
 	 */
-	public static final int KING = 12;
+	public static final int KING = 13;
 
 	/**
 	 * Value of a Diamond
@@ -80,10 +80,17 @@ public class Card {
 	 * Value of a Spade
 	 */
 	public static final int SPADES = 3;
+	/**
+	 * Will contain a value from 0 to 3. Will represent the suits of cards from
+	 * smallest suit to largest (diamond, club, heart, spades)
+	 */
 	private int suit;
-	// Will contain a value from 0 to 3. Will represent the suits of cards from
-	// smallest suit to largest (diamond, club, heart, spades)
-	private int face; // Will contain a value from 0 to 12, from Ace to King
+	
+	/**
+	 * Will contain a value from 1 to 13, from Ace to King
+	 */
+	private int face;
+	
 	private boolean isFaceUp; // Tells whether the card is face up or face down
 
 	/**
