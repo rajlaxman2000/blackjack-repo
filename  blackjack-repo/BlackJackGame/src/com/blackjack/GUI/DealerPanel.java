@@ -26,10 +26,8 @@ public class DealerPanel extends JPanel {
 	 * Initializes a JPanel name "dealer" displaying the minimum wager. Card
 	 * graphics are dealt with automatically by paintComponent(g).
 	 * 
-	 * @param minimumBet
-	 *            smallest money wager allowed
-	 * @param cardImages
-	 *            card image map file
+	 * @param minimumBet - smallest money wager allowed
+	 * @param cardImages - card image map file
 	 */
 	public DealerPanel(int minimumBet, Image cardImages) {
 		super();
@@ -41,8 +39,7 @@ public class DealerPanel extends JPanel {
 		hand = null;
 		minBet = minimumBet;
 		cardImgs = cardImages;
-		minBetDisp = new JLabel("<HTML><font color=#EDDA74>Minimum Bet: "
-				+ "$<u>" + minBet + "</u></font></HTML>");
+		minBetDisp = new JLabel("<HTML><font color=#EDDA74>Minimum Bet: $<u>" + minBet + "</u></font></HTML>");
 		minBetDisp.setFont(new Font(Font.SERIF, Font.BOLD, 18));
 		add(minBetDisp);
 	}
@@ -68,10 +65,8 @@ public class DealerPanel extends JPanel {
 	/**
 	 * Creates a hand with Card c1 and Card c2
 	 * 
-	 * @param c1
-	 *            First card to be added
-	 * @param c2
-	 *            Second card to be added
+	 * @param c1 - First card to be added
+	 * @param c2 - Second card to be added
 	 */
 	public void startHand(Card c1, Card c2) {
 		hand = new Hand(c1, c2);
@@ -84,16 +79,7 @@ public class DealerPanel extends JPanel {
 		hand.get(1).flip();
 		repaint();
 	}
-
-	/**
-	 * Checks if there's an ace in the dealer's hand
-	 * 
-	 * @return Boolean representing whether an ace is present
-	 */
-	public boolean checkAce() {
-		return hand.get(0).getFace() == Card.ACE;
-	}
-
+	
 	/**
 	 * Paints the cards stacked top-down in addition to the rest of the
 	 * components. The cards are arranged so the user can still see all of the
@@ -110,17 +96,13 @@ public class DealerPanel extends JPanel {
 	}
 
 	/**
-	 * Paints a card image onto (x,y) of the container. A facedown card will be
+	 * Paints a card image onto (x,y) of the container. A face down card will be
 	 * drawn accordingly.
 	 * 
-	 * @param g
-	 *            the graphics context
-	 * @param card
-	 *            the card to be printed
-	 * @param x
-	 *            the x-position of the printed card in this container
-	 * @param y
-	 *            the y-position of the printed card in this container
+	 * @param g 	- the graphics context
+	 * @param card  - the card to be printed
+	 * @param x 	- the x-position of the printed card in this container
+	 * @param y		- the y-position of the printed card in this container
 	 */
 	private void drawCard(Graphics g, Card card, int x, int y) {
 		int cx; // top-left x of cardsImage
@@ -145,7 +127,6 @@ public class DealerPanel extends JPanel {
 				break; // Spades
 			}
 		}
-		g.drawImage(cardImgs, x, y, x + 79, y + 123, cx, cy, cx + 79, cy + 123,
-				this);
+		g.drawImage(cardImgs, x, y, x + 79, y + 123, cx, cy, cx + 79, cy + 123,this);
 	}
 }

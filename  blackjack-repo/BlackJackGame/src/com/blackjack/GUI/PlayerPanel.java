@@ -20,8 +20,8 @@ import com.blackjack.bean.Hand;
 /**
  * A container that shows a player's name, remaining cash, and his hand. It also
  * contains fields for its current bet, the minimum bet, and the card image
- * file. The player can be called upong to do bets, insurance, a game action
- * (for computers), recieve money/winnings, and clear his hand. This panel is
+ * file. The player can be called upon to do bets, insurance, a game action
+ * (for computers), receive money/winnings, and clear his hand. This panel is
  * not designed, however, to handle splits.
  * 
  */
@@ -84,8 +84,7 @@ public class PlayerPanel extends JPanel {
 	 * @param cardImages
 	 *            the card images file
 	 */
-	public PlayerPanel(String pName, boolean isHumanPlayer, int difficulty,
-			int startMoney, int minimumBet, Image cardImages) {
+	public PlayerPanel(String pName, boolean isHumanPlayer, int difficulty, int startMoney, int minimumBet, Image cardImages) {
 		super();
 		setLayout(new BoxLayout(this, BoxLayout.Y_AXIS));
 		setPreferredSize(new Dimension(99, 325));
@@ -118,7 +117,7 @@ public class PlayerPanel extends JPanel {
 	}
 
 	/**
-	 * Returns the hand of the dealer, probably for comaparison purposes.
+	 * Returns the hand of the dealer, probably for comparison purposes.
 	 * 
 	 * @return dealers hand
 	 */
@@ -133,64 +132,7 @@ public class PlayerPanel extends JPanel {
 	 */
 	public ArrayList<Card> clearHand() {
 		return hand.clearHand();
-	}
-
-	/**
-	 * For computer players only. Causes player to play Blackjack accordingly.
-	 * 
-	 * @param dealerCard
-	 *            the dealer's visible card
-	 * @return -1 means not a computer, 0 means stand, 1 means hit, 2 means
-	 *         surrender, 3 means double
-	 */
-	public int askComputerAction(Card dealerCard) {
-		if (!isHuman) {
-			if (hand.isBlackJack()) {
-				return 0;
-			}
-
-			if (hand.isBusted()) {
-				return 0;
-			}
-			if (level == EASY) {
-				if (hand.getBestValue() == 11) {
-					if (rnd.nextInt(101) < (4 / 13) * 100) {
-						return 3;
-					}
-				} else {
-					int nowValue = hand.getBestValue();
-					if (nowValue <= 11)
-						return 1;
-					double bustingChance = (nowValue - 8) / (double) 13;
-					double successChance = 1 - bustingChance;
-					if (rnd.nextInt(120) < successChance * 100 - 16)
-						return 1;
-					else
-						return 0;
-				}
-			} else { // HARDbot code
-				if (hand.length() == 2) {
-					if ((dealerCard.getValue() <= 9 && hand.getBestValue() == 10)
-							|| (dealerCard.getValue() <= 10 && hand
-									.getBestValue() == 11))
-						return 3;
-				}
-				if (dealerCard.getHighValue() >= 7) {
-					if (hand.getBestValue() >= 17)
-						return 0;
-					else
-						return 1;
-				} else if (dealerCard.getHighValue() <= 6) {
-					if (hand.getBestValue() > 11)
-						return 0;
-					else
-						return 1;
-				} else
-					return 0; // just in case
-			}
-		}
-		return -1;
-	}
+	}	
 
 	/**
 	 * New hand for player with Card c1 and Card c2
@@ -214,81 +156,17 @@ public class PlayerPanel extends JPanel {
 	 * @return amount to bet
 	 */
 	public int askBet(int count) {
-		int normalBet;
+		int betAmount=0;
 		if (isHuman) {
-			normalBet = askHumanBet("Minimum Bet is $" + minBet
-					+ ". How much will are you betting?", minBet, money);
-		} else {
-			normalBet = previousBet;
-
-			if (level == EASY) {
-				int rand = rnd.nextInt(3);
-				if (previousOutcome == LOSS)
-					normalBet -= minBet * rand;
-				else if (previousOutcome == PUSH)
-					;
-				else if (previousOutcome == WIN)
-					normalBet += minBet * rand;
-			} else if (level == HARD) {
-				int optimal = minBet * (count);
-				normalBet = optimal;
-			}
-
-			if (normalBet > money / 20)
-				normalBet = money / 20;
-			if (normalBet < minBet)
-				normalBet = minBet;
-
-			previousBet = normalBet;
-		}
-		money -= normalBet;
-		bet = normalBet;
+			betAmount = askHumanBet("Minimum Bet is $" + minBet	+ ". How much will are you betting?", minBet, money);
+		} 
+		
+		money = money - betAmount;
+		bet = betAmount;
 		updateText();
-		return normalBet;
+		return betAmount;
 	}
-
-	/**
-	 * Gets the betting amount from player for insurance. If it is human, it
-	 * pops up a dialog asking for an amount. For computers, it is calculated
-	 * internally. The bet is automatically subtracted from the players total
-	 * money.
-	 * 
-	 * @param count
-	 *            Current card count
-	 * @return amount to bet
-	 */
-	public int askInsurance(int count) {
-		int insureBet;
-		if (isHuman) {
-			insureBet = askHumanBet(
-					"My hand's looking pretty nice. You can "
-							+ "take insurance against Blackjack for 2:1 odds, but only "
-							+ "with up to half your original bet ($" + bet / 2
-							+ "). How " + "much will it be?", -1,
-					Math.min(money, bet / 2));
-		} else {
-			insureBet = 0;
-			if (level == EASY) {
-				if (rnd.nextInt(4) == 0)
-					insureBet = Math.min(money, bet / 2);
-			} else if (level == HARD) {
-				if (count >= 3)
-					insureBet = Math.min(money, bet / 2);
-			}
-		}
-		money -= insureBet;
-		updateText();
-		return insureBet;
-	}
-
-	/**
-	 * Lets the player double his/her bet and take one more card
-	 */
-	public void doubleDown() {
-		money -= bet;
-		bet *= 2;
-	}
-
+	
 	/**
 	 * Adds to player's total money amount moneyWon.
 	 * 
@@ -389,8 +267,7 @@ public class PlayerPanel extends JPanel {
 				hBet = Integer.valueOf(sBet);
 			}
 		} catch (Exception e) {
-			JOptionPane.showMessageDialog(this, "Trying to be funny, eh? "
-					+ "Don't wanna play? - GET OUT.");
+			JOptionPane.showMessageDialog(this, "Trying to be funny, eh? Don't wanna play? - GET OUT.");
 			System.exit(0);
 		}
 		return hBet;
@@ -405,7 +282,7 @@ public class PlayerPanel extends JPanel {
 	}
 
 	/**
-	 * Paints a card image onto (x,y) of the container. A facedown card will be
+	 * Paints a card image onto (x,y) of the container. A face down card will be
 	 * drawn accordingly.
 	 * 
 	 * @param g

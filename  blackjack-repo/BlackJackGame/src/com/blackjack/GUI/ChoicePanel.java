@@ -14,9 +14,6 @@ public class ChoicePanel extends JPanel {
 	private static final long serialVersionUID = 1L;
 	private JButton hit = new JButton("Hit");
 	private JButton stand = new JButton("Stand");
-	private JButton dbl = new JButton("Double");
-	private JButton split = new JButton("Split");
-	private JButton surrender = new JButton("Surrender");
 
 	/**
 	 * Makes a choice panel with the above buttons
@@ -25,11 +22,7 @@ public class ChoicePanel extends JPanel {
 		super();
 		setOpaque(false);
 		add(hit);
-		add(stand);
-		add(dbl);
-		add(split);
-		disableSplit(); // Not implementable, yet
-		add(surrender);
+		add(stand);		
 	}
 
 	/**
@@ -45,28 +38,7 @@ public class ChoicePanel extends JPanel {
 	public void enableStand() {
 		stand.setEnabled(true);
 	}
-
-	/**
-	 * Enable double button
-	 */
-	public void enableDouble() {
-		dbl.setEnabled(true);
-	}
-
-	/**
-	 * Enable split button
-	 */
-	public void enableSplit() {
-		split.setEnabled(true);
-	}
-
-	/**
-	 * Enable surrender button
-	 */
-	public void enableSurrender() {
-		surrender.setEnabled(true);
-	}
-
+	
 	/**
 	 * Disable hit button
 	 */
@@ -81,26 +53,7 @@ public class ChoicePanel extends JPanel {
 		stand.setEnabled(false);
 	}
 
-	/**
-	 * Disable double button
-	 */
-	public void disableDouble() {
-		dbl.setEnabled(false);
-	}
-
-	/**
-	 * Disable split button
-	 */
-	public void disableSplit() {
-		split.setEnabled(false);
-	}
-
-	/**
-	 * Disable surrender button
-	 */
-	public void disableSurrender() {
-		surrender.setEnabled(false);
-	}
+	
 
 	/**
 	 * Adds a listener for these buttons. The listener should contain responses
@@ -111,9 +64,6 @@ public class ChoicePanel extends JPanel {
 	 */
 	public void addListener(ActionListener a) {
 		hit.addActionListener(a);
-		stand.addActionListener(a);
-		dbl.addActionListener(a);
-		split.addActionListener(a);
-		surrender.addActionListener(a);
+		stand.addActionListener(a);		
 	}
 }
