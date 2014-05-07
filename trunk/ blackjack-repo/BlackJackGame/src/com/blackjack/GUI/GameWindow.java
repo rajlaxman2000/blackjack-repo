@@ -24,7 +24,7 @@ import com.blackjack.bean.Deck;
 public class GameWindow extends JFrame implements ActionListener {
 
 	private static final long serialVersionUID = 1L;
-	ChoicePanel playerChoices = new ChoicePanel();
+	ChoicePanel playerChoices;
 	public PlayerPanel human;
 
 	private DealerPanel dealer;
@@ -32,27 +32,33 @@ public class GameWindow extends JFrame implements ActionListener {
 	public boolean turnContinue;
 
 	private Image cardImages;
-
+	
 	/**
-	 * Minimum bet of the table
+	 *  Minimum bet amount which will be accepted, this will be set while create this class object
 	 */
-	public static final int MIN_BET = 10;
+	private int minBet;
+
 	/**
 	 * Money each player starts with
 	 */
-	public static final int START_MONEY = 1000;
+	private int initialMoney;
 
 	/**
 	 * Opens window containing Blackjack game.
 	 */
-	public GameWindow() {
-		super("Quest 2011: Blackjack");
+	public GameWindow(int minBet, int initialMoney) {
+		
+		super("Geetha's : Blackjack");
+		
+		setMinBet(minBet);
+		setInitialMoney(initialMoney);
+
+		playerChoices = new ChoicePanel();
 		getContentPane().setBackground(new Color(80, 135, 85));
 		loadImages();
 		initComponents();
 		pack();
 		setLocationRelativeTo(null);
-		// setResizable(false);
 		setDefaultCloseOperation(EXIT_ON_CLOSE);
 		setVisible(true);
 	}
@@ -65,26 +71,15 @@ public class GameWindow extends JFrame implements ActionListener {
 	 */
 	@Override
 	public void actionPerformed(ActionEvent a) {
+
 		String command = a.getActionCommand();
-		//String bop = "That tickles!"; // Placeholder for executing actual
-										// command
 		if (command.equals("Hit")) {
 			giveCard(human);
 			boolean busted = human.getHand().isBusted();
 			turnContinue = !busted;
-			// playerChoices.disableSurrender();
-			// playerChoices.disableDouble();
 		} else if (command.equals("Stand")) {
 			turnContinue = false;
-		} /*
-		 * else if (command.equals("Double")) { human.doubleDown();
-		 * giveCard(human); turnContinue = false; } else if
-		 * (command.equals("Split")) { JOptionPane.showMessageDialog(this, bop);
-		 * } else if (command.equals("Surrender")) {
-		 * JOptionPane.showMessageDialog(this, " Fine,  " + "take back $" +
-		 * human.getCurrentBet() / 2 + "."); collectCards(human);
-		 * human.addWinnings(human.getCurrentBet() / 2); turnContinue = false; }
-		 */
+		}
 	}
 
 	/**
@@ -96,32 +91,28 @@ public class GameWindow extends JFrame implements ActionListener {
 
 		setLayout(new BorderLayout(10, 10));
 
-		dealer = new DealerPanel(MIN_BET, cardImages);
+		this.dealer = new DealerPanel(this.minBet, cardImages);
 		add(dealer, BorderLayout.LINE_START);
 
 		JPanel players = new JPanel();
-		players.setBorder(BorderFactory.createTitledBorder(
-				BorderFactory.createLineBorder(Color.DARK_GRAY), "PLAYERS"));
-		human = new PlayerPanel("Human - You", true, -1, START_MONEY, MIN_BET,
-				cardImages);
+		players.setBorder(BorderFactory.createTitledBorder(BorderFactory.createLineBorder(Color.DARK_GRAY), "PLAYERS"));
+		
+		human = new PlayerPanel("Human - You", true, -1, this.initialMoney,this.minBet, cardImages);
 
 		players.add(human);
-
 		players.setOpaque(false);
+		
 		add(players, BorderLayout.CENTER);
 		playerChoices.addListener(this);
 		add(playerChoices, BorderLayout.PAGE_END);
 	}
 
 	/**
-	 * Gives or takes money from each player
+	 * Gives or takes money from player
 	 * 
 	 * @param player
 	 */
 	private void payOut(PlayerPanel player) {
-		// surrender check
-		if (player.getHand().length() == 0)
-			return;
 
 		// blackjack hands
 		boolean playerHasBJ = player.getHand().isBlackJack();
@@ -129,21 +120,17 @@ public class GameWindow extends JFrame implements ActionListener {
 		if (playerHasBJ && dealerHasBJ) {
 			player.addWinnings(player.getCurrentBet());
 			if (player.isHuman())
-				JOptionPane.showMessageDialog(this, "We both have Blackjack,"
-						+ " a push. Your $" + player.getCurrentBet()
-						+ "bet is returned.");
+				JOptionPane.showMessageDialog(this,"We both have Blackjack, a push. Your $"+ player.getCurrentBet() + "bet is returned.");
 			return;
 		} else if (playerHasBJ && !dealerHasBJ) {
 			player.addWinnings(player.getCurrentBet() * 5 / 2);
 			if (player.isHuman())
-				JOptionPane.showMessageDialog(this, "Not bad, a Blackjack. "
-						+ "You win $" + player.getCurrentBet() * 5 / 2 + ".");
+				JOptionPane.showMessageDialog(this, "Not bad, a Blackjack. You win $" + player.getCurrentBet() * 5 / 2 + ".");
 			return;
 		} else if (!playerHasBJ && dealerHasBJ) {
 			player.addWinnings(0);
 			if (player.isHuman())
-				JOptionPane.showMessageDialog(this, "I have Blackjack. "
-						+ "Sorry, you lose.");
+				JOptionPane.showMessageDialog(this,"I have Blackjack. Sorry, you lose.");
 
 			return;
 		}
@@ -154,14 +141,12 @@ public class GameWindow extends JFrame implements ActionListener {
 		if (playerHasBusted) {
 			player.addWinnings(0);
 			if (player.isHuman())
-				JOptionPane.showMessageDialog(this, "You have busted. "
-						+ "Sorry, you lose.");
+				JOptionPane.showMessageDialog(this,"You have busted. Sorry, you lose.");
 			return;
 		} else if (dealerHasBusted) {
 			player.addWinnings(player.getCurrentBet() * 2);
 			if (player.isHuman())
-				JOptionPane.showMessageDialog(this, "Damn, I've busted. "
-						+ "You get $" + player.getCurrentBet() * 2 + ".");
+				JOptionPane.showMessageDialog(this,"Damn, I've busted. You get $" + player.getCurrentBet()* 2 + ".");
 			return;
 		}
 
@@ -171,47 +156,21 @@ public class GameWindow extends JFrame implements ActionListener {
 		if (playerValue > dealerValue) {
 			player.addWinnings(player.getCurrentBet() * 2);
 			if (player.isHuman())
-				JOptionPane.showMessageDialog(this, " you've won. "
-						+ "Take your $" + player.getCurrentBet() * 2 + ".");
+				JOptionPane.showMessageDialog(this,
+						"dealer Score=" + dealerValue + "Your Score="+ playerValue + " you've won. " + "Take your $"+ player.getCurrentBet() * 2 + ".");
 			return;
 		} else if (playerValue == dealerValue) {
 			player.addWinnings(player.getCurrentBet());
 			if (player.isHuman())
-				JOptionPane.showMessageDialog(this,
-						"A push. Your $" + player.getCurrentBet()
-								+ "bet is returned.");
+				JOptionPane.showMessageDialog(this, "dealer Score="+ dealerValue + "Your Score=" + playerValue+ "A push. Your $" 
+												+ player.getCurrentBet()+ "bet is returned.");
 			return;
 		} else {
 			player.addWinnings(0);
 			if (player.isHuman())
-				JOptionPane.showMessageDialog(this, "My hand wins. Better luck"
-						+ "next time around.");
+				JOptionPane.showMessageDialog(this, "dealer Score="+ dealerValue + "Your Score=" + playerValue
+												+ "My hand wins. Better luck" + "next time around.");
 			return;
-		}
-	}
-
-	/**
-	 * Asks for insurance bets from each player
-	 * 
-	 * @param player
-	 */
-	private void doInsurance(PlayerPanel player) {
-		int insureBet = player.askInsurance(deck.getCount());
-		if (insureBet == 0)
-			return;
-		if (dealer.getHand().isBlackJack()) {
-			player.addWinnings(insureBet * 3);
-			if (player.isHuman())
-				JOptionPane.showMessageDialog(this, "I have Blackjack. "
-						+ "Take your $" + insureBet * 3 + ".");
-			turnContinue = false;
-		} else {
-			if (player.isHuman())
-				JOptionPane.showMessageDialog(this,
-						"Lucky you, I don't have Blackjack. "
-								+ "You lose your $" + insureBet
-								+ " bet, but you still have a "
-								+ "chance to win.");
 		}
 	}
 
@@ -221,12 +180,11 @@ public class GameWindow extends JFrame implements ActionListener {
 	private void loadImages() {
 		ClassLoader cl = GameWindow.class.getClassLoader();
 		URL imageURL = cl.getResource("cards.png");
-		if (imageURL != null)
+		if (imageURL != null){
 			cardImages = Toolkit.getDefaultToolkit().createImage(imageURL);
-		else {
+		} else {
 			String errorMsg = "Card image file loading failed.";
-			JOptionPane.showMessageDialog(this, errorMsg, "Error",
-					JOptionPane.ERROR_MESSAGE);
+			JOptionPane.showMessageDialog(this, errorMsg, "Error",JOptionPane.ERROR_MESSAGE);
 			System.exit(1);
 		}
 	}
@@ -292,18 +250,11 @@ public class GameWindow extends JFrame implements ActionListener {
 	 * Enables and disables some buttons
 	 * 
 	 * @param hitState
-	 *            The hit button
+	 *            - The hit button
 	 * @param standState
-	 *            The stand button
-	 * @param doubleState
-	 *            The double button
-	 * @param splitState
-	 *            The split button
-	 * @param surrenderState
-	 *            The surrender button
+	 *            - The stand button
 	 */
-	void setButtonState(boolean hitState, boolean standState,
-			boolean doubleState, boolean splitState, boolean surrenderState) {
+	void setButtonState(boolean hitState, boolean standState) {
 		if (hitState)
 			playerChoices.enableHit();
 		else
@@ -312,13 +263,6 @@ public class GameWindow extends JFrame implements ActionListener {
 			playerChoices.enableStand();
 		else
 			playerChoices.disableStand();
-		/*
-		 * if (doubleState) playerChoices.enableDouble(); else
-		 * playerChoices.disableDouble(); if (splitState)
-		 * playerChoices.enableSplit(); else playerChoices.disableSplit(); if
-		 * (surrenderState) playerChoices.enableSurrender(); else
-		 * playerChoices.disableSurrender();
-		 */
 	}
 
 	/**
@@ -339,16 +283,6 @@ public class GameWindow extends JFrame implements ActionListener {
 	}
 
 	/**
-	 * Asks for insurance bets from players
-	 */
-	public void insurance() {
-		if (dealer.checkAce()) {
-			doInsurance(human);
-
-		}
-	}
-
-	/**
 	 * Does the dealer's turn
 	 */
 	public void doDealerTurn() {
@@ -362,7 +296,6 @@ public class GameWindow extends JFrame implements ActionListener {
 	 * Gives out the money
 	 */
 	public void doPayOuts() {
-
 		payOut(human);
 	}
 
@@ -371,9 +304,38 @@ public class GameWindow extends JFrame implements ActionListener {
 	 */
 	public void reset() {
 		collectCards(human);
-
 		collectDealerCards();
 		turnContinue = true;
 	}
+
+	/**
+	 * @return the initialMoney
+	 */
+	public int getInitialMoney() {
+		return initialMoney;
+	}
+
+	/**
+	 * @param initialMoney the initialMoney to set
+	 */
+	public void setInitialMoney(int initialMoney) {
+		this.initialMoney = initialMoney;
+	}
+
+	/**
+	 * @return the minBet
+	 */
+	public int getMinBet() {
+		return minBet;
+	}
+
+	/**
+	 * @param minBet the minBet to set
+	 */
+	public void setMinBet(int minBet) {
+		this.minBet = minBet;
+	}
+	
+	
 
 }
