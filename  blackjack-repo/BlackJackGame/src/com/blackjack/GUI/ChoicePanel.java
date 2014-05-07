@@ -4,10 +4,7 @@ import java.awt.event.*;
 import javax.swing.*;
 
 /**
- * A container of buttons for player options in Blackjack: Hit, Stand, Double,
- * Split, Surrender.
- * 
- * 
+ * A container of buttons for player options in Blackjack: Hit, Stand
  */
 public class ChoicePanel extends JPanel {
 
@@ -52,9 +49,7 @@ public class ChoicePanel extends JPanel {
 	public void disableStand() {
 		stand.setEnabled(false);
 	}
-
 	
-
 	/**
 	 * Adds a listener for these buttons. The listener should contain responses
 	 * for each of these button commands.

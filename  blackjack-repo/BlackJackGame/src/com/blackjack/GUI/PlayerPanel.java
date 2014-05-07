@@ -6,7 +6,7 @@ import java.awt.Font;
 import java.awt.Graphics;
 import java.awt.Image;
 import java.util.ArrayList;
-import java.util.Random;
+//import java.util.Random;
 
 import javax.swing.BorderFactory;
 import javax.swing.BoxLayout;
@@ -20,9 +20,9 @@ import com.blackjack.bean.Hand;
 /**
  * A container that shows a player's name, remaining cash, and his hand. It also
  * contains fields for its current bet, the minimum bet, and the card image
- * file. The player can be called upon to do bets, insurance, a game action (for
- * computers), receive money/winnings, and clear his hand. This panel is not
- * designed, however, to handle splits.
+ * file. The player can be called upon to do bets, insurance, a game action (for computers),
+ * receive money/winnings, and clear his hand. This panel is not designed, however, 
+ * to handle splits.
  * 
  */
 public class PlayerPanel extends JPanel {
@@ -112,8 +112,7 @@ public class PlayerPanel extends JPanel {
 	}
 
 	/**
-	 * Clears the player's hand and returns it in an ArrayList
-	 * 
+	 * Clears the player's hand and returns it in an ArrayList	 * 
 	 * @return ArrayList containing the cleared hand
 	 */
 	public ArrayList<Card> clearHand() {
