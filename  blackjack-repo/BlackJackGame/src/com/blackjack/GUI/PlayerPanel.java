@@ -425,7 +425,7 @@ public class PlayerPanel extends JPanel {
 			cx = 2 * 79;
 			cy = 4 * 123;
 		} else {
-			cx = (card.getFace()) * 79;
+			cx = (card.getFace()-1) * 79;
 			switch (card.getSuit()) {
 			case Card.DIAMONDS:
 				cy = 123;
