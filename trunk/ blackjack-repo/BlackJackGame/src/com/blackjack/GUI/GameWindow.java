@@ -66,7 +66,7 @@ public class GameWindow extends JFrame implements ActionListener {
 	@Override
 	public void actionPerformed(ActionEvent a) {
 		String command = a.getActionCommand();
-		String bop = "That tickles!"; // Placeholder for executing actual
+		//String bop = "That tickles!"; // Placeholder for executing actual
 										// command
 		if (command.equals("Hit")) {
 			giveCard(human);
