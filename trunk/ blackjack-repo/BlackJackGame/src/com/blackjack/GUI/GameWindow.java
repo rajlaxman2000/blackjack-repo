@@ -24,12 +24,13 @@ import com.blackjack.bean.Deck;
 public class GameWindow extends JFrame implements ActionListener {
 
 	private static final long serialVersionUID = 1L;
-	ChoicePanel playerChoices;
+	
+	public ChoicePanel playerChoices;
 	public PlayerPanel human;
 
 	private DealerPanel dealer;
 	private Deck deck;
-	public boolean turnContinue;
+	private boolean turnContinue;
 
 	private Image cardImages;
 	
@@ -43,13 +44,15 @@ public class GameWindow extends JFrame implements ActionListener {
 	 * Money each player starts with
 	 */
 	private int initialMoney;
+	
+	private static final String WindowHeading = "Geetha's : Blackjack";
 
 	/**
 	 * Opens window containing Blackjack game.
 	 */
 	public GameWindow(int minBet, int initialMoney) {
 		
-		super("Geetha's : Blackjack");
+		super(WindowHeading);
 		
 		setMinBet(minBet);
 		setInitialMoney(initialMoney);
@@ -77,9 +80,9 @@ public class GameWindow extends JFrame implements ActionListener {
 		if (command.equals("Hit")) {
 			giveCard(human);
 			boolean busted = human.getHand().isBusted();
-			turnContinue = !busted;
+			setTurnContinue(!busted);
 		} else if (command.equals("Stand")) {
-			turnContinue = false;
+			setTurnContinue(false);
 		}
 	}
 
@@ -88,7 +91,7 @@ public class GameWindow extends JFrame implements ActionListener {
 	 */
 	private void initComponents() {
 		deck = new Deck();
-		turnContinue = true;
+		setTurnContinue(true);
 
 		setLayout(new BorderLayout(10, 10));
 
@@ -154,6 +157,7 @@ public class GameWindow extends JFrame implements ActionListener {
 		// normal hands
 		int playerValue = player.getHand().getBestValue();
 		int dealerValue = dealer.getHand().getBestValue();
+		
 		if (playerValue > dealerValue) {
 			player.addWinnings(player.getCurrentBet() * 2);
 			if (player.isHuman())
@@ -255,7 +259,7 @@ public class GameWindow extends JFrame implements ActionListener {
 	 * @param standState
 	 *            - The stand button
 	 */
-	void setButtonState(boolean hitState, boolean standState) {
+	public void setButtonState(boolean hitState, boolean standState) {
 		if (hitState)
 			playerChoices.enableHit();
 		else
@@ -277,7 +281,7 @@ public class GameWindow extends JFrame implements ActionListener {
 	/**
 	 * Deals out cards to players and dealer
 	 */
-	void deal() {
+	public void deal() {
 		dealerCards(dealer);
 		dealCards(human);
 
@@ -336,6 +340,22 @@ public class GameWindow extends JFrame implements ActionListener {
 	public void setMinBet(int minBet) {
 		this.minBet = minBet;
 	}
+
+	/**
+	 * @return the turnContinue
+	 */
+	public boolean isTurnContinue() {
+		return turnContinue;
+	}
+
+	/**
+	 * @param turnContinue the turnContinue to set
+	 */
+	public void setTurnContinue(boolean turnContinue) {
+		this.turnContinue = turnContinue;
+	}
+	
+	
 	
 	
 

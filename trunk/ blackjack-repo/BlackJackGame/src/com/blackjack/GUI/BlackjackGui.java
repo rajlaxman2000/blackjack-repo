@@ -42,7 +42,7 @@ public class BlackjackGui {
 			/**
 			 * By default/First turn it is true, After that it will be set base don the game state
 			 */
-			while (game.turnContinue) {
+			while (game.isTurnContinue()) {
 				game.repaint();
 			}
 			
