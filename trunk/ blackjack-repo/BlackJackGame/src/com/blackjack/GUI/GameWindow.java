@@ -166,19 +166,19 @@ public class GameWindow extends JFrame implements ActionListener {
 			player.addWinnings(player.getCurrentBet() * 2);
 			if (player.isHuman())
 				JOptionPane.showMessageDialog(this,
-						"dealer Score=" + dealerValue + "Your Score="+ playerValue + " you've won. " + "Take your $"+ player.getCurrentBet() * 2 + ".");
+						" Dealer Score = " + dealerValue + "; Your Score = "+ playerValue + ";\n you've won. " + "Take your $"+ player.getCurrentBet() * 2 + ".");
 			return;
 		} else if (playerValue == dealerValue) {
 			player.addWinnings(player.getCurrentBet());
 			if (player.isHuman())
-				JOptionPane.showMessageDialog(this, "dealer Score="+ dealerValue + "Your Score=" + playerValue+ "A push. Your $" 
+				JOptionPane.showMessageDialog(this, " Dealer Score = "+ dealerValue + "; Your Score = " + playerValue+ ";\n A push. Your $" 
 												+ player.getCurrentBet()+ "bet is returned.");
 			return;
 		} else {
 			player.addWinnings(0);
 			if (player.isHuman())
-				JOptionPane.showMessageDialog(this, "dealer Score="+ dealerValue + "Your Score=" + playerValue
-												+ "My hand wins. Better luck" + "next time around.");
+				JOptionPane.showMessageDialog(this, " Dealer Score = "+ dealerValue + "; Your Score = " + playerValue
+												+ ";\n My hand wins. Better luck next time around.");
 			return;
 		}
 	}
