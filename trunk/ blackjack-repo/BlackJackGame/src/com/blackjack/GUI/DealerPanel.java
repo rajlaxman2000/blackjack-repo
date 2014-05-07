@@ -36,8 +36,7 @@ public class DealerPanel extends JPanel {
 		setLayout(new BoxLayout(this, BoxLayout.Y_AXIS)); // vertical layout
 		setPreferredSize(new Dimension(99, 320));
 		setOpaque(false);
-		setBorder(BorderFactory.createTitledBorder(
-				BorderFactory.createLineBorder(Color.DARK_GRAY), "DEALER"));
+		setBorder(BorderFactory.createTitledBorder(BorderFactory.createLineBorder(Color.DARK_GRAY), "DEALER"));
 
 		hand = null;
 		minBet = minimumBet;
@@ -49,7 +48,7 @@ public class DealerPanel extends JPanel {
 	}
 
 	/**
-	 * Returns the hand of the dealer, probably for comaparison purposes.
+	 * Returns the hand of the dealer, probably for comparison purposes.
 	 * 
 	 * @return dealers hand
 	 */
@@ -130,7 +129,7 @@ public class DealerPanel extends JPanel {
 			cx = 2 * 79;
 			cy = 4 * 123;
 		} else {
-			cx = (card.getFace()) * 79;
+			cx = (card.getFace()-1) * 79;
 			switch (card.getSuit()) {
 			case Card.DIAMONDS:
 				cy = 123;
