@@ -97,7 +97,7 @@ public class GameWindow extends JFrame implements ActionListener {
 		JPanel players = new JPanel();
 		players.setBorder(BorderFactory.createTitledBorder(BorderFactory.createLineBorder(Color.DARK_GRAY), "PLAYERS"));
 		
-		human = new PlayerPanel("Human - You", true, -1, this.initialMoney,this.minBet, cardImages);
+		human = new PlayerPanel("Human - You", true, this.initialMoney,this.minBet, cardImages);
 
 		players.add(human);
 		players.setOpaque(false);
