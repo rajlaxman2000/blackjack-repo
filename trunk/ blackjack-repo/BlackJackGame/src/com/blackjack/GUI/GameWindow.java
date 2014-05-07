@@ -34,7 +34,8 @@ public class GameWindow extends JFrame implements ActionListener {
 	private Image cardImages;
 	
 	/**
-	 *  Minimum bet amount which will be accepted, this will be set while create this class object
+	 *  Minimum bet amount which will be accepted, this will be set while 
+	 *  create this class object
 	 */
 	private int minBet;
 
