@@ -9,89 +9,53 @@ package com.blackjack.bean;
  */
 
 public class Card {
-
-	/**
-	 * The face value of an Ace
-	 */
+	
 	public static final int ACE = 1;
-
-	/**
-	 * The face value of a Two
-	 */
+	
 	public static final int TWO = 2;
-	/**
-	 * The face value of a Three
-	 */
+	
 	public static final int THREE = 3;
-	/**
-	 * The face value of a Four
-	 */
+	
 	public static final int FOUR = 4;
-	/**
-	 * The face value of a Five
-	 */
+	
 	public static final int FIVE = 5;
-	/**
-	 * The face value of a Six
-	 */
+	
 	public static final int SIX = 6;
-	/**
-	 * The face value of a Seven
-	 */
+	
 	public static final int SEVEN = 7;
-	/**
-	 * The face value of an Eight
-	 */
+	
 	public static final int EIGHT = 8;
-	/**
-	 * The face value of a Nine
-	 */
+	
 	public static final int NINE = 9;
-	/**
-	 * The face value of a Ten
-	 */
+	
 	public static final int TEN = 10;
-	/**
-	 * The face value of a Jack
-	 */
+	
 	public static final int JACK = 11;
-	/**
-	 * The face value of a Queen
-	 */
+		
 	public static final int QUEEN = 12;
-	/**
-	 * The face value of a King
-	 */
+	
 	public static final int KING = 13;
 
-	/**
-	 * Value of a Diamond
-	 */
 	public static final int DIAMONDS = 0;
-	/**
-	 * Value of a Club
-	 */
+	
 	public static final int CLUBS = 1;
-	/**
-	 * Value of a Club
-	 */
+	
 	public static final int HEARTS = 2;
-	/**
-	 * Value of a Spade
-	 */
+	
 	public static final int SPADES = 3;
+	
 	/**
-	 * Will contain a value from 0 to 3. Will represent the suits of cards from
-	 * smallest suit to largest (diamond, club, heart, spades)
+	 * suit will contain a value from 0 to 3. Will represent the suits of cards from
+	 * smallest suit to largest (Diamond, Club, Heart, Spades)
 	 */
 	private int suit;
 	
 	/**
-	 * Will contain a value from 1 to 13, from Ace to King
+	 * Face will contain a value from 1 to 13, from Ace to King
 	 */
 	private int face;
 	
-	private boolean isFaceUp; // Tells whether the card is face up or face down
+	private boolean isFaceUp; // Tells whether the card is face (i.e, hidden or showing).
 
 	/**
 	 * Create a card with suit cSuit, face cFace, and facing direction faceDir
@@ -103,10 +67,10 @@ public class Card {
 	 * @param faceDir
 	 *            Face up (true) or Face down (false)
 	 */
-	public Card(int cSuit, int cFace, boolean faceDir) {
-		suit = cSuit;
-		face = cFace;
-		isFaceUp = faceDir;
+	public Card(int suit, int face, boolean faceDir) {
+		this.suit = suit;
+		this.face = face;
+		this.isFaceUp = faceDir;
 	}
 
 	/**
@@ -117,10 +81,10 @@ public class Card {
 	 * @param cFace
 	 *            Face of the Card
 	 */
-	public Card(int cSuit, int cFace) {
-		suit = cSuit;
-		face = cFace;
-		isFaceUp = true;
+	public Card(int suit, int face) {
+		this.suit = suit;
+		this.face = face;
+		this.isFaceUp = true;
 	}
 
 	/**

@@ -30,7 +30,7 @@ public class GameWindow extends JFrame implements ActionListener {
 	
 	private PlayerPanel humanPlayer;
 	
-	public ChoicePanel playerChoices;
+	private ChoicePanel playerChoices;
 	
 	private Deck deck;
 	
@@ -75,7 +75,7 @@ public class GameWindow extends JFrame implements ActionListener {
 		JPanel players = new JPanel();
 		players.setBorder(BorderFactory.createTitledBorder(BorderFactory.createLineBorder(Color.DARK_GRAY), "PLAYERS"));
 		
-		this.humanPlayer = new PlayerPanel("Human - You", true, BlackJackUtil.START_MONEY,BlackJackUtil.MIN_BET, this.cardImages);
+		this.humanPlayer = new PlayerPanel(BlackJackUtil.PLAYER_NAME, true, BlackJackUtil.START_MONEY,BlackJackUtil.MIN_BET, this.cardImages);
 
 		players.add(this.humanPlayer);
 		players.setOpaque(false);
