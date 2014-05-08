@@ -143,8 +143,7 @@ public class PlayerPanel extends JPanel {
 	public int askBet(int count) {
 		int betAmount = 0;
 		if (isHuman) {
-			betAmount = askHumanBet("Minimum Bet is $" + minBet
-					+ ". How much will are you betting?", minBet, money);
+			betAmount = askHumanBet("Minimum Bet is $" + minBet + ". How much will are you betting?", minBet, money);
 		}
 
 		money = money - betAmount;
@@ -243,18 +242,18 @@ public class PlayerPanel extends JPanel {
 			while (hBet < 0 || hBet < min || hBet > max) {
 				String errReply;
 				if (hBet < 0) {
-					errReply = "Huh? What did you say?";
+					errReply = "Please provide +ve amount";
 				} else if (hBet < min) {
-					errReply = "At least $" + min + " needed:";
+					errReply = "You need to give minimum $" + min + " as bet amount";
 				} else {
-					errReply = "You can't bet that much:";
+					errReply = "Given bet mount is not avaible in u r balance";
 				}
 				sBet = JOptionPane.showInputDialog(errReply);
 				hBet = Integer.valueOf(sBet);
 			}
 		} catch (Exception e) {
 			JOptionPane.showMessageDialog(this,
-					"Trying to be funny, eh? Don't wanna play? - GET OUT.");
+					"You have not select correct otpion, So will be out of the game.");
 			System.exit(0);
 		}
 		return hBet;
