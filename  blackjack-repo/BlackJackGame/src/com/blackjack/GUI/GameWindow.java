@@ -107,9 +107,9 @@ public class GameWindow extends JFrame implements ActionListener {
 				JOptionPane.showMessageDialog(this,"We both have Blackjack, a push. Your $"+ player.getCurrentBet() + "bet is returned.");
 			return;
 		} else if (playerHasBJ && !dealerHasBJ) {
-			player.addWinnings(player.getCurrentBet() * 5 / 2);
+			player.addWinnings(player.getCurrentBet() * 2);
 			if (player.isHuman())
-				JOptionPane.showMessageDialog(this, "Not bad, a Blackjack. You win $" + player.getCurrentBet() * 5 / 2 + ".");
+				JOptionPane.showMessageDialog(this, "Not bad, a Blackjack. You win $" + player.getCurrentBet() * 2 + ".");
 			return;
 		} else if (!playerHasBJ && dealerHasBJ) {
 			player.addWinnings(0);
@@ -282,7 +282,7 @@ public class GameWindow extends JFrame implements ActionListener {
 	 * Gives out the money
 	 */
 	public void doPayOuts() {
-		payOut(humanPlayer);
+		payOut(this.humanPlayer);
 	}
 
 	/**
