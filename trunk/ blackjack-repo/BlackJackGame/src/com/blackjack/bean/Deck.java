@@ -1,7 +1,10 @@
 package com.blackjack.bean;
 
 import java.util.ArrayList;
+import java.util.List;
 import java.util.Random;
+
+import com.blackjack.GUI.BlackJackUtil;
 
 /**
  * Template for creating a deck of cards for a blackjack game. Static variables
@@ -12,20 +15,19 @@ import java.util.Random;
  */
 public class Deck {
 
-	private ArrayList<Card> deck = new ArrayList<Card>();
-	private final static int NUM_DECKS = 3;
+	private List<Card> deck;
+	
 	private int numCardsRemaining;
-	private final static int FACES_IN_DECK = 13;
-	private final static int SUITS_IN_DECK = 4;
-	private final static int CARDS_IN_DECK = 52;
 	
 	private int count;
 
 		
 	public Deck() {
-		for (int i = 0; i < NUM_DECKS; i++) {
-			for (int j = 0; j < SUITS_IN_DECK; j++) {
-				for (int k = 1; k <= FACES_IN_DECK; k++) {
+		
+		deck = new ArrayList<Card>();
+		for (int i = 0; i < BlackJackUtil.NUM_DECKS; i++) {
+			for (int j = 0; j < BlackJackUtil.SUITS_IN_DECK; j++) {
+				for (int k = 1; k <= BlackJackUtil.FACES_IN_DECK; k++) {
 					deck.add(new Card(j, k));
 				}
 			}
@@ -51,7 +53,7 @@ public class Deck {
 			deck.add(tempCard);
 		}
 		count = 0;
-		numCardsRemaining = NUM_DECKS * CARDS_IN_DECK;
+		numCardsRemaining = BlackJackUtil.NUM_DECKS * BlackJackUtil.CARDS_IN_DECK;
 	}
 
 	/**
@@ -79,7 +81,7 @@ public class Deck {
 	 * @return Integer representing the current card count
 	 */
 	public int getCount() {
-		double decksLeft = (double) numCardsRemaining / CARDS_IN_DECK;
+		double decksLeft = (double) numCardsRemaining / BlackJackUtil.CARDS_IN_DECK;
 		return (int) Math.round(count / decksLeft);
 	}
 

@@ -155,7 +155,7 @@ public class GameWindow extends JFrame implements ActionListener {
 			player.addWinnings(0);
 			if (player.isHuman())
 				JOptionPane.showMessageDialog(this, " Dealer Score = "+ dealerValue + "; Your Score = " + playerValue
-												+ ";\n My hand wins. Better luck next time around.");
+												+ ";\n Dealer hand wins. Better luck next time around.");
 			return;
 		}
 	}
