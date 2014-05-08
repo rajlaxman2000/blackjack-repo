@@ -6,17 +6,8 @@ import javax.swing.*;
  * Contains the main GUI and main method.
  * 
  */
-public class BlackjackGui {
+public class BlackjackGui {	
 	
-	/**
-	 * Minimum bet of the table
-	 */
-	public static final int MIN_BET = 10;
-	
-	/**
-	 * Money each player starts with
-	 */
-	public static final int START_MONEY = 1000;
 
 	/**
 	 * Runs the Game 
@@ -25,11 +16,12 @@ public class BlackjackGui {
 	 */
 	public static void main(String[] args) {
 
-		GameWindow game = new GameWindow(MIN_BET,START_MONEY);
-		JOptionPane.showMessageDialog(game, "Welcome to the Blackjack Game.");
+		GameWindow game = new GameWindow();
+		JOptionPane.showMessageDialog(game, BlackJackUtil.WELCOM_MSG);
 		while (true) {
-			if (game.human.getMoney() < MIN_BET) {
-				JOptionPane.showMessageDialog(game, "Sorry, You are put of money, can't paly any more.");
+			int playerBalanceMoney = game.getHumanPlayer().getMoney();
+			if (playerBalanceMoney < BlackJackUtil.MIN_BET) {
+				JOptionPane.showMessageDialog(game, BlackJackUtil.OUT_OF_MNY_MSG);
 				System.exit(0);
 			}
 

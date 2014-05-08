@@ -15,9 +15,10 @@ import com.blackjack.bean.Hand;
  */
 public class DealerPanel extends JPanel {
 
-	private static final long serialVersionUID = 1L;
+	private static final long serialVersionUID = 1L;	
+	
 	private Hand hand;
-	private int minBet;
+	
 	private Image cardImgs;
 
 	private JLabel minBetDisp;
@@ -35,31 +36,13 @@ public class DealerPanel extends JPanel {
 		setPreferredSize(new Dimension(99, 320));
 		setOpaque(false);
 		setBorder(BorderFactory.createTitledBorder(BorderFactory.createLineBorder(Color.DARK_GRAY), "DEALER"));
-
-		hand = null;
-		minBet = minimumBet;
-		cardImgs = cardImages;
-		minBetDisp = new JLabel("<HTML><font color=#EDDA74>Minimum Bet: $<u>" + minBet + "</u></font></HTML>");
+		
+		
+		this.cardImgs = cardImages;
+		
+		minBetDisp = new JLabel("<HTML><font color=#EDDA74>Minimum Bet: $<u>" + minimumBet + "</u></font></HTML>");
 		minBetDisp.setFont(new Font(Font.SERIF, Font.BOLD, 18));
 		add(minBetDisp);
-	}
-
-	/**
-	 * Returns the hand of the dealer, probably for comparison purposes.
-	 * 
-	 * @return dealers hand
-	 */
-	public Hand getHand() {
-		return hand;
-	}
-
-	/**
-	 * Clears the hand and returns it in an ArrayList
-	 * 
-	 * @return ArrayList containing the cleared hand
-	 */
-	public ArrayList<Card> clearHand() {
-		return hand.clearHand();
 	}
 
 	/**
@@ -69,7 +52,16 @@ public class DealerPanel extends JPanel {
 	 * @param c2 - Second card to be added
 	 */
 	public void startHand(Card c1, Card c2) {
-		hand = new Hand(c1, c2);
+		 this.hand = new Hand(c1, c2);
+	}
+	
+	/**
+	 * Clears the hand and returns it in an ArrayList
+	 * 
+	 * @return ArrayList containing the cleared hand
+	 */
+	public ArrayList<Card> clearHand() {
+		return hand.clearHand();
 	}
 
 	/**
@@ -128,5 +120,14 @@ public class DealerPanel extends JPanel {
 			}
 		}
 		g.drawImage(cardImgs, x, y, x + 79, y + 123, cx, cy, cx + 79, cy + 123,this);
+	}
+	
+	/**
+	 * Returns the hand of the dealer, probably for comparison purposes.
+	 * 
+	 * @return dealers hand
+	 */
+	public Hand getHand() {
+		return hand;
 	}
 }

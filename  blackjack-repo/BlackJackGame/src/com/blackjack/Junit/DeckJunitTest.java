@@ -34,7 +34,7 @@ public class DeckJunitTest {
 	public void testdraw() {
 		Deck d=new Deck();
 		Card card=new Card(3, 4);
-		ArrayList<Card> deck=new ArrayList<>();
+		//ArrayList<Card> deck=new ArrayList<>();
 		
 		//assertEquals(is, d.draw())
 	}

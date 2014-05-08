@@ -16,6 +16,7 @@ import javax.swing.JPanel;
 
 import com.blackjack.bean.Card;
 import com.blackjack.bean.Deck;
+import com.blackjack.bean.Hand;
 
 /**
  * Contains GUI components.
@@ -26,38 +27,25 @@ public class GameWindow extends JFrame implements ActionListener {
 	private static final long serialVersionUID = 1L;
 	
 	private DealerPanel dealer;
-	private Deck deck;
-	private boolean turnContinue;
-	private Image cardImages;
 	
-	/**
-	 *  Minimum bet amount which will be accepted, this will be set while 
-	 *  create this class object
-	 */
-	private int minBet;
-
-	/**
-	 * Money each player starts with
-	 */
-	private int initialMoney;
-	
-	private static final String WINDOW_HEADING = "Geetha's : Blackjack";
-	
+	private PlayerPanel humanPlayer;
 	
 	public ChoicePanel playerChoices;
-	public PlayerPanel human;	
+	
+	private Deck deck;
+	
+	private boolean turnContinue;
+	private Image cardImages;	
 
 	/**
 	 * Opens window containing Blackjack game.
 	 */
-	public GameWindow(int minBet, int initialMoney) {
+	public GameWindow() {
 		
-		super(WINDOW_HEADING);
-		
-		setMinBet(minBet);
-		setInitialMoney(initialMoney);
-		
+		super(BlackJackUtil.WINDOW_HEADING);
 		getContentPane().setBackground(new Color(80, 135, 85));
+
+		//This will load the main card image into  cardImages variable
 		loadImages();
 		
 		//Creates player and dealer panels 
@@ -69,43 +57,27 @@ public class GameWindow extends JFrame implements ActionListener {
 		setVisible(true);
 	}
 
-	/**
-	 * Responds to button presses from the ChoicePanel.
-	 * 
-	 * @param a
-	 *            The event that will be responded to
-	 */
-	@Override
-	public void actionPerformed(ActionEvent a) {
-		
-		String command = a.getActionCommand();
-		if (command.equals("Hit")) {
-			giveCard(human);
-			boolean busted = human.getHand().isBusted();
-			setTurnContinue(!busted);
-		} else if (command.equals("Stand")) {
-			setTurnContinue(false);
-		}
-	}
+
 
 	/**
 	 * Adds components to the frame.
 	 */
 	private void initComponents() {
-		deck = new Deck();
+		
+		this.deck = new Deck();
 		setTurnContinue(true);
 
 		setLayout(new BorderLayout(10, 10));
 
-		this.dealer = new DealerPanel(this.minBet, cardImages);
-		add(dealer, BorderLayout.LINE_START);
+		this.dealer = new DealerPanel(BlackJackUtil.MIN_BET, this.cardImages);
+		add(this.dealer, BorderLayout.LINE_START);
 
 		JPanel players = new JPanel();
 		players.setBorder(BorderFactory.createTitledBorder(BorderFactory.createLineBorder(Color.DARK_GRAY), "PLAYERS"));
 		
-		human = new PlayerPanel("Human - You", true, this.initialMoney,this.minBet, cardImages);
+		this.humanPlayer = new PlayerPanel("Human - You", true, BlackJackUtil.START_MONEY,BlackJackUtil.MIN_BET, this.cardImages);
 
-		players.add(human);
+		players.add(this.humanPlayer);
 		players.setOpaque(false);
 		
 		add(players, BorderLayout.CENTER);
@@ -122,9 +94,13 @@ public class GameWindow extends JFrame implements ActionListener {
 	 */
 	private void payOut(PlayerPanel player) {
 
-		// blackjack hands
-		boolean playerHasBJ = player.getHand().isBlackJack();
-		boolean dealerHasBJ = dealer.getHand().isBlackJack();
+		Hand playerHand = player.getHand();
+		Hand dealerHand = this.dealer.getHand();
+		
+		// Black Jack Check
+		boolean playerHasBJ = playerHand.isBlackJack();
+		boolean dealerHasBJ = dealerHand.isBlackJack();
+		
 		if (playerHasBJ && dealerHasBJ) {
 			player.addWinnings(player.getCurrentBet());
 			if (player.isHuman())
@@ -143,9 +119,10 @@ public class GameWindow extends JFrame implements ActionListener {
 			return;
 		}
 
-		// busting check
-		boolean playerHasBusted = player.getHand().isBusted();
-		boolean dealerHasBusted = dealer.getHand().isBusted();
+		// Busted Check
+		boolean playerHasBusted = playerHand.isBusted();
+		boolean dealerHasBusted = dealerHand.isBusted();
+		
 		if (playerHasBusted) {
 			player.addWinnings(0);
 			if (player.isHuman())
@@ -158,9 +135,9 @@ public class GameWindow extends JFrame implements ActionListener {
 			return;
 		}
 
-		// normal hands
-		int playerValue = player.getHand().getBestValue();
-		int dealerValue = dealer.getHand().getBestValue();
+		// Normal Score Check
+		int playerValue = playerHand.getBestValue();
+		int dealerValue = dealerHand.getBestValue();
 		
 		if (playerValue > dealerValue) {
 			player.addWinnings(player.getCurrentBet() * 2);
@@ -190,7 +167,7 @@ public class GameWindow extends JFrame implements ActionListener {
 		ClassLoader cl = GameWindow.class.getClassLoader();
 		URL imageURL = cl.getResource("cards.png");
 		if (imageURL != null){
-			cardImages = Toolkit.getDefaultToolkit().createImage(imageURL);
+			this.cardImages = Toolkit.getDefaultToolkit().createImage(imageURL);
 		} else {
 			String errorMsg = "Card image file loading failed.";
 			JOptionPane.showMessageDialog(this, errorMsg, "Error",JOptionPane.ERROR_MESSAGE);
@@ -207,8 +184,8 @@ public class GameWindow extends JFrame implements ActionListener {
 	private void dealerCards(DealerPanel dealer) {
 		Card c1 = deck.draw();
 		Card c2 = deck.draw();
-		dealer.startHand(c1, c2);
-		dealer.flipSecond();
+		this.dealer.startHand(c1, c2);
+		this.dealer.flipSecond();
 	}
 
 	/**
@@ -227,9 +204,9 @@ public class GameWindow extends JFrame implements ActionListener {
 	 * Collects cards from the dealer
 	 */
 	private void collectDealerCards() {
-		ArrayList<Card> toCollect = dealer.clearHand();
-		for (Card c : toCollect) {
-			deck.addToBottom(c);
+		ArrayList<Card> collectedCards = dealer.clearHand();
+		for (Card card : collectedCards) {
+			this.deck.addToBottom(card);
 		}
 	}
 
@@ -240,9 +217,9 @@ public class GameWindow extends JFrame implements ActionListener {
 	 *            The player to collect cards from
 	 */
 	private void collectCards(PlayerPanel player) {
-		ArrayList<Card> toCollect = player.clearHand();
-		for (Card c : toCollect) {
-			deck.addToBottom(c);
+		ArrayList<Card> collectedCards = player.clearHand();
+		for (Card card : collectedCards) {
+			this.deck.addToBottom(card);
 		}
 	}
 
@@ -278,7 +255,7 @@ public class GameWindow extends JFrame implements ActionListener {
 	 * Asks for bets from players
 	 */
 	public void askBets() {
-		human.askBet(deck.getCount());
+		humanPlayer.askBet(deck.getCount());
 
 	}
 
@@ -287,7 +264,7 @@ public class GameWindow extends JFrame implements ActionListener {
 	 */
 	public void deal() {
 		dealerCards(dealer);
-		dealCards(human);
+		dealCards(humanPlayer);
 
 	}
 
@@ -295,9 +272,9 @@ public class GameWindow extends JFrame implements ActionListener {
 	 * Does the dealer's turn
 	 */
 	public void doDealerTurn() {
-		dealer.flipSecond();
-		while (dealer.getHand().getBestValue() < 17) {
-			dealer.getHand().addCard(deck.draw());
+		this.dealer.flipSecond();
+		while (this.dealer.getHand().getBestValue() < 17) {
+			this.dealer.getHand().addCard(deck.draw());
 		}
 	}
 
@@ -305,44 +282,35 @@ public class GameWindow extends JFrame implements ActionListener {
 	 * Gives out the money
 	 */
 	public void doPayOuts() {
-		payOut(human);
+		payOut(humanPlayer);
 	}
 
 	/**
 	 * Clears the cards on the table
 	 */
 	public void reset() {
-		collectCards(human);
+		collectCards(humanPlayer);
 		collectDealerCards();
 		setTurnContinue(true);
-	}
-
+	}	
+	
 	/**
-	 * @return the initialMoney
+	 * Responds to button presses from the ChoicePanel.
+	 * 
+	 * @param a
+	 *            The event that will be responded to
 	 */
-	public int getInitialMoney() {
-		return initialMoney;
-	}
-
-	/**
-	 * @param initialMoney the initialMoney to set
-	 */
-	public void setInitialMoney(int initialMoney) {
-		this.initialMoney = initialMoney;
-	}
-
-	/**
-	 * @return the minBet
-	 */
-	public int getMinBet() {
-		return minBet;
-	}
-
-	/**
-	 * @param minBet the minBet to set
-	 */
-	public void setMinBet(int minBet) {
-		this.minBet = minBet;
+	@Override
+	public void actionPerformed(ActionEvent a) {
+		
+		String command = a.getActionCommand();
+		if (command.equals("Hit")) {
+			giveCard(humanPlayer);
+			boolean busted = humanPlayer.getHand().isBusted();
+			setTurnContinue(!busted);
+		} else if (command.equals("Stand")) {
+			setTurnContinue(false);
+		}
 	}
 
 	/**
@@ -359,7 +327,33 @@ public class GameWindow extends JFrame implements ActionListener {
 		this.turnContinue = turnContinue;
 	}
 	
-	
+	/**
+	 * @return the cardImages
+	 */
+	public Image getCardImages() {
+		return cardImages;
+	}
+
+	/**
+	 * @param cardImages the cardImages to set
+	 */
+	public void setCardImages(Image cardImages) {
+		this.cardImages = cardImages;
+	}
+
+	/**
+	 * @return the humanPlayer
+	 */
+	public PlayerPanel getHumanPlayer() {
+		return humanPlayer;
+	}
+
+	/**
+	 * @param humanPlayer the humanPlayer to set
+	 */
+	public void setHumanPlayer(PlayerPanel humanPlayer) {
+		this.humanPlayer = humanPlayer;
+	}
 	
 	
 

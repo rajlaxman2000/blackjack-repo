@@ -13,12 +13,12 @@ import java.util.Random;
 public class Deck {
 
 	private ArrayList<Card> deck = new ArrayList<Card>();
-	private final static int NUM_DECKS = 1;
+	private final static int NUM_DECKS = 3;
 	private int numCardsRemaining;
 	private final static int FACES_IN_DECK = 13;
 	private final static int SUITS_IN_DECK = 4;
 	private final static int CARDS_IN_DECK = 52;
-	//private final static int CARDS_IN_FIRST_HAND = 2;
+	
 	private int count;
 
 		
