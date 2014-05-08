@@ -1,0 +1,2 @@
+1.If player has the black Jack, then again we are asking him to hit or stand
+		Suggestion : We should show him that he won the game through BlackJAck with out even asking for any choice
