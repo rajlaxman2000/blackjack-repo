@@ -32,11 +32,11 @@ public abstract class BlackJackUtil {
 	
 	public static final int START_MONEY = 1000;
 	
-	public static final String WINDOW_HEADING = "Geetha's : Blackjack";
+	public static final String WINDOW_HEADING = "Geetha's : Blackjack Game";
 
 	public static final String WELCOM_MSG = "Welcome to the Blackjack Game.";
 	
-	public static final String OUT_OF_MNY_MSG = "Sorry, You are put of money, can't paly any more.";
+	public static final String OUT_OF_MNY_MSG = "Sorry, You are out of money, can't paly any more.";
 	
 	public static final String PLAYER_NAME = "Geetha";
 }

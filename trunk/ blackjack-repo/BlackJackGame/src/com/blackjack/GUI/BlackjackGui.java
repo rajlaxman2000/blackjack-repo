@@ -16,34 +16,34 @@ public class BlackjackGui {
 	 */
 	public static void main(String[] args) {
 
-		GameWindow game = new GameWindow();
-		JOptionPane.showMessageDialog(game, BlackJackUtil.WELCOM_MSG);
+		GameWindow gameWindow = new GameWindow();
+		JOptionPane.showMessageDialog(gameWindow, BlackJackUtil.WELCOM_MSG);
 		while (true) {
-			int playerBalanceMoney = game.getHumanPlayer().getMoney();
+			int playerBalanceMoney = gameWindow.getHumanPlayer().getMoney();
 			if (playerBalanceMoney < BlackJackUtil.MIN_BET) {
-				JOptionPane.showMessageDialog(game, BlackJackUtil.OUT_OF_MNY_MSG);
+				JOptionPane.showMessageDialog(gameWindow, BlackJackUtil.OUT_OF_MNY_MSG);
 				System.exit(0);
 			}
 
-			game.repaint();//Clears the cards from the screen.
-			game.askBets();// Will ask for bet amount.
-			game.deal(); // Cards will be dealt for Dealer as well as for player. (2 cards will be given for each.)
-			game.repaint();	// Cards will be displayed on Screen		
-			game.setButtonState(true, true);// Will enable hit and stand buttons
+			gameWindow.repaint();//Clears the cards from the screen.
+			gameWindow.askBets();// Will ask for bet amount.
+			gameWindow.deal(); // Cards will be dealt for Dealer as well as for player. (2 cards will be given for each.)
+			gameWindow.repaint();	// Cards will be displayed on Screen		
+			gameWindow.setButtonState(true, true);// Will enable hit and stand buttons
 			
 			/**
 			 * By default/First turn it is true, After that it will be set base don the game state
 			 */
-			while (game.isTurnContinue()) {
-				game.repaint();
+			while (gameWindow.isTurnContinue()) {
+				gameWindow.repaint();
 			}
 			
-			game.setButtonState(false, false); //Disable buttons 
-			game.repaint();
-			game.doDealerTurn();
-			game.repaint();
-			game.doPayOuts();
-			game.reset();
+			gameWindow.setButtonState(false, false); //Disable buttons 
+			gameWindow.repaint();
+			gameWindow.doDealerTurn();
+			gameWindow.repaint();
+			gameWindow.doPayOuts();
+			gameWindow.reset();
 		}
 	}
 
