@@ -6,7 +6,7 @@ import javax.swing.*;
  * Contains the main GUI and main method.
  * 
  */
-public class BlackjackGui {	
+public class BlackjackGUIGame {	
 	
 
 	/**
