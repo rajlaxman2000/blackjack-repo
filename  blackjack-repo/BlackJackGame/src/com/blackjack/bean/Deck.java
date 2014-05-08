@@ -24,11 +24,11 @@ public class Deck {
 		
 	public Deck() {
 		
-		deck = new ArrayList<Card>();
+		this.deck = new ArrayList<Card>();
 		for (int i = 0; i < BlackJackUtil.NUM_DECKS; i++) {
 			for (int j = 0; j < BlackJackUtil.SUITS_IN_DECK; j++) {
 				for (int k = 1; k <= BlackJackUtil.FACES_IN_DECK; k++) {
-					deck.add(new Card(j, k));
+					this.deck.add(new Card(j, k));
 				}
 			}
 		}
@@ -41,16 +41,16 @@ public class Deck {
 	public void shuffle() {
 		ArrayList<Card> tempDeck = new ArrayList<Card>();
 		Random random = new Random();
-		while (deck.size() > 0) {
-			int cardToRemove = random.nextInt(deck.size());
-			Card tempCard = deck.get(cardToRemove);
-			deck.remove(cardToRemove);
+		while (this.deck.size() > 0) {
+			int cardToRemove = random.nextInt(this.deck.size());
+			Card tempCard = this.deck.get(cardToRemove);
+			this.deck.remove(cardToRemove);
 			tempDeck.add(tempCard);
 		}
 		while (tempDeck.size() > 0) {
 			Card tempCard = tempDeck.get(0);
 			tempDeck.remove(0);
-			deck.add(tempCard);
+			this.deck.add(tempCard);
 		}
 		count = 0;
 		numCardsRemaining = BlackJackUtil.NUM_DECKS * BlackJackUtil.CARDS_IN_DECK;
@@ -62,9 +62,9 @@ public class Deck {
 	 * @return Card card from the top of the Deck Shoe
 	 */
 	public Card draw() {
-		Card toDraw = deck.get(0);
+		Card toDraw = this.deck.get(0);
 
-		deck.remove(0);
+		this.deck.remove(0);
 		numCardsRemaining--;
 		int face = toDraw.getFace();
 		if (face >= 1 && face <= 5)
@@ -91,7 +91,7 @@ public class Deck {
 	 * @param c -	Card to be added the bottom of the deck
 	 */
 	public void addToBottom(Card c) {
-		deck.add(c);
+		this.deck.add(c);
 		if (numCardsRemaining < 20) {
 			shuffle();
 		}

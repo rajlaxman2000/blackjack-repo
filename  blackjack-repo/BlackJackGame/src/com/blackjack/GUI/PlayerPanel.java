@@ -6,7 +6,6 @@ import java.awt.Font;
 import java.awt.Graphics;
 import java.awt.Image;
 import java.util.ArrayList;
-//import java.util.Random;
 
 import javax.swing.BorderFactory;
 import javax.swing.BoxLayout;
@@ -19,41 +18,28 @@ import com.blackjack.bean.Hand;
 
 /**
  * A container that shows a player's name, remaining cash, and his hand. It also
- * contains fields for its current bet, the minimum bet, and the card image
- * file. The player can be called upon to do bets, insurance, a game action (for computers),
- * receive money/winnings, and clear his hand. This panel is not designed, however, 
- * to handle splits.
- * 
+ * contains fields for its current bet, the minimum bet, and the card image file.
+ * The player can be called upon to do bets, insurance, a game action (for computers),
+ * receive money/winnings, and clear his hand.
  */
 public class PlayerPanel extends JPanel {
 
 	private static final long serialVersionUID = 1L;
+	
 	private String name;
 	private boolean isHuman;
+	
 	private int money;
 	private int bet;
 	private int minBet;
+	
 	private Hand hand;
-
 	private Image cardImgs;
 
 	private JLabel moneyDisp;
 	private JLabel betDisp;
 
-	/**
-	 * Integer representing a win
-	 */
-	public static final int WIN = 1;
-
-	/**
-	 * Integer representing a push
-	 */
-	public static final int PUSH = 0;
-
-	/**
-	 * Integer representing a loss
-	 */
-	public static final int LOSS = -1;
+	
 
 	// private static Random rnd = new Random();
 
@@ -74,26 +60,31 @@ public class PlayerPanel extends JPanel {
 	 * @param cardImages
 	 *            the card images file
 	 */
-	public PlayerPanel(String pName, boolean isHumanPlayer, int startMoney,int minimumBet, Image cardImages) {
+	public PlayerPanel(String playerName, boolean isHumanPlayer, int startMoney,int minimumBet, Image cardImages) {
+		
 		super();
 		setLayout(new BoxLayout(this, BoxLayout.Y_AXIS));
 		setPreferredSize(new Dimension(99, 325));
-		setOpaque(false);
-		Color c = Color.DARK_GRAY;
+		setOpaque(false);	
+		
+		Color c = Color.DARK_GRAY;		
 		if (isHumanPlayer)
 			c = Color.LIGHT_GRAY;
-		setBorder(BorderFactory.createTitledBorder(
-				BorderFactory.createLineBorder(c), name));
-		name = pName;
-		isHuman = isHumanPlayer;
-		money = startMoney;
-		bet = 0;
-		minBet = minimumBet;
-		hand = null;
-		cardImgs = cardImages;
+		
+		setBorder(BorderFactory.createTitledBorder(BorderFactory.createLineBorder(c), name));
+		
+		this.name = playerName;
+		this.isHuman = isHumanPlayer;
+		this.money = startMoney;
+		this.bet = 0;
+		this.minBet = minimumBet;
+		this.hand = null;
+		this.cardImgs = cardImages;
+		
 		moneyDisp = new JLabel("$" + Integer.toString(money));
 		moneyDisp.setForeground(new Color(87, 233, 100));
 		moneyDisp.setFont(new Font(Font.SERIF, Font.PLAIN, 14));
+		
 		betDisp = new JLabel("$" + Integer.toString(0));
 		betDisp.setForeground(Color.RED);
 		betDisp.setFont(new Font(Font.SERIF, Font.PLAIN, 14));
@@ -163,15 +154,14 @@ public class PlayerPanel extends JPanel {
 		updateText();
 
 		if (moneyWon > bet) {
-			this.previousOutcome = WIN;
-			moneyDisp.setText(moneyDisp.getText() + "  ");
+			this.previousOutcome = BlackJackUtil.WIN;			
 		} else if (moneyWon == bet) {
-			previousOutcome = PUSH;
-			moneyDisp.setText(moneyDisp.getText() + "  ");
+			this.previousOutcome = BlackJackUtil.PUSH;			
 		} else {
-			previousOutcome = LOSS;
-			moneyDisp.setText(moneyDisp.getText() + "  ");
+			this.previousOutcome = BlackJackUtil.LOSS;		
 		}
+		
+		moneyDisp.setText(moneyDisp.getText() + "  ");
 	}
 
 	/**
