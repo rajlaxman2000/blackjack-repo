@@ -6,6 +6,7 @@ import org.junit.runners.Suite.SuiteClasses;
 
 @RunWith(Suite.class)
 @SuiteClasses({ CardJunitTest.class, HandJunitTest.class, PlayerPanelTest.class,DealerPanelJUnitTest.class })
+
 public class BlackJackTest {
 
 }
