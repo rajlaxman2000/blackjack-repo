@@ -1,4 +1,4 @@
-package com.blackjack.JUnitTest;
+package com.blackjack.Junit;
 
 import static org.junit.Assert.*;
 

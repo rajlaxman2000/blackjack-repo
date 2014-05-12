@@ -1,4 +1,4 @@
-package com.blackjack.JUnitTest;
+package com.blackjack.Junit;
 
 import static org.junit.Assert.*;
 
@@ -7,7 +7,8 @@ import org.junit.Test;
 import com.blackjack.bean.Card;
 import com.blackjack.bean.Hand;
 
-public class HandJUnitTest {
+public class HandJunitTest {
+	
 	@Test
 	public void testgetBestValue() {
 		Card card1 = new Card(3, 6);
@@ -36,5 +37,6 @@ public class HandJUnitTest {
 		assertEquals(true, hand.isBlackJack());
 
 	}
+
 
 }

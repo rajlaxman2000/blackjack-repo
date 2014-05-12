@@ -1,4 +1,4 @@
-package com.blackjack.JUnitTest;
+package com.blackjack.Junit;
 
 import static org.junit.Assert.*;
 
@@ -6,7 +6,7 @@ import org.junit.Test;
 
 import com.blackjack.bean.Card;
 
-public class CardJUnitTest {
+public class CardJunitTest {
 
 	@Test
 	public void testgetColorName() {
