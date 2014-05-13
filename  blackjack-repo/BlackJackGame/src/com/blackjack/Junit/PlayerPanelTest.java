@@ -1,9 +1,7 @@
 package com.blackjack.Junit;
 
 import static org.junit.Assert.*;
-
 import java.awt.Image;
-
 import org.junit.Test;
 
 import com.blackjack.GUI.PlayerPanel;
