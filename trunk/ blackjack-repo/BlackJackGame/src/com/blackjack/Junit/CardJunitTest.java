@@ -1,7 +1,6 @@
 package com.blackjack.Junit;
 
 import static org.junit.Assert.*;
-
 import org.junit.Test;
 
 import com.blackjack.bean.Card;
