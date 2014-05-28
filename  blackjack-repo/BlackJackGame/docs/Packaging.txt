@@ -1,0 +1,13 @@
+Step1:	Right click on the eclipse project and export it as java jar (Give some logical name, we will be using this name later on)
+Step2:	Keep that Jar in some standard location (let's say at D:\)
+Step3:  Now go to command prompt make sure you run the cmd as system administrator
+Step4:  Goto location where we kept the Jar (In our example D:\)
+Step5:  run this command  -  "keytool -genkey -keystore testKeys -alias jdc"
+			Give the required details which ever asks (But remember the password, it should be more than 6 characters)
+Step6: 	jarsigner -keystore testKeys BlackJackGame.jar jdc
+			Will aks the priovously used password.
+Step7: Now create a file called blackjack.jnlp (Already there with in your code) and then edit it using the text file form out side u may face some problem if u do it with eclipse.
+
+Step8: Now take this files (.jnlp and jar file built with code) and keep them in Tomcat\webapps\ROOT folder
+Step9: Now run the tomcat by using file from its bin folder.
+Step10: Hit this url http://localhost:8080/blackjack.jnlp then it will ask you for down load some thing and will start the actual application.
